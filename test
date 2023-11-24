@@ -54,7 +54,23 @@ Key-Usage: sign
 Name-Real: root
 EOF
 
-printf 'a\nb\nc\nd\n' | gpg --clearsign > InRelease
+# printf 'a\nb\nc\nd\n' | gpg --clearsign > InRelease
+
+cat << EOF | gpg --clearsign > InRelease
+Codename: snapshot
+Components: main
+Architectures: all amd64 arm64
+Date: Fri, 24 Nov 2023 00:08:59 +0000
+Valid-Until:
+SHA256:
+ 2bc1a3f01791ae7bfcfb4771c5445367555247343d03965fa210f617207d5663 3695508 main/binary-all/Packages.xz
+ 0040fdf2f957703650c54fc39599bbe0df09dd51bb22ce36299d3bee5496d166 7838940 main/binary-amd64/Packages.xz
+ b6d9988e0c11521d45a2e42df05c166d42a1b4e5baca3020e4272a58cf7b5000 7756136 main/binary-arm64/Packages.xz
+ ffa5f520cb000a011135377ed5d7632d07c586729adf7540c931c6f77cba14c5 9982048 main/source/Sources.xz
+EOF
+
+cat InRelease
+
 touch ./keyring.gpg
 gpg --export | gpg --no-default-keyring --keyring ./keyring.gpg --import
 split_inline_sig InRelease Release Release.gpg
