@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -exufo pipefail
+set -eufo pipefail
 
 split_inline_sig () {
 	local inreldest reldest relsigdest
@@ -58,5 +58,5 @@ printf 'a\nb\nc\nd\n' | gpg --clearsign > InRelease
 touch ./keyring.gpg
 gpg --export | gpg --no-default-keyring --keyring ./keyring.gpg --import
 split_inline_sig InRelease Release Release.gpg
-gpgv --keyring ./keyring.gpg --verify InRelease
-gpgv --keyring ./keyring.gpg --verify Release.gpg Release
+gpgv --keyring ./keyring.gpg InRelease
+gpgv --keyring ./keyring.gpg Release.gpg Release
