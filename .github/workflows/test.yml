@@ -3,4 +3,5 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: gpg --version
+      - uses: actions/checkout@v4
+      - run: ./test
